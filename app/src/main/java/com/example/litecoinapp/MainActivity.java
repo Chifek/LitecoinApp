@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 double unpaidRewardsDoge = userObject.getDouble("unpaid_rewards_doge");
                 double unpaidRewardsLtc = userObject.getDouble("unpaid_rewards");
                 String formattedUnpaidRewards = String.format("%.4f", unpaidRewardsLtc);
+                double paid_rewards_doge = userObject.getDouble("paid_rewards_doge");
+                double paid_rewards = userObject.getDouble("paid_rewards");
 
                 String pastRewards24LtcString = String.valueOf(pastRewards24Ltc);
                 if (pastRewards24LtcString.length() > 10) {
@@ -154,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
                 if (totalAmount24String.length() > 4) {
                     totalAmount24String = totalAmount24String.substring(0, 4);
                 }
+                double totalRewardDoge = paid_rewards_doge * dogeUsd;
+                double totalRewardLtc = paid_rewards * ltcUsd;
+                double totalIncome = totalRewardLtc + totalRewardDoge;
                 String totalUnpaidLtcString = String.valueOf(totalUnpaidLtc);
                 if (totalUnpaidLtcString.length() > 4) {
                     totalUnpaidLtcString = totalUnpaidLtcString.substring(0, 4);
@@ -168,22 +173,26 @@ public class MainActivity extends AppCompatActivity {
                 // Формируем строку для отображения в TextView
                 String displayText =
                         "\nКоличество workers: " + numWorkers +
-                        "\nПодключенных workers: " + connectedWorkers +
-                        "\nСуммарный хешрейт workers: " + formattedHashRateMhs +
-                        "\n_____________________________" +
-                        "\nЗаработано за 24 часа:" +
-                        "\n" + pastRewards24DogeString + " DOGE ~" + totalUsdDogeString + "$" +
-                        "\n" + pastRewards24LtcString + " LTC ~" + totalUsdLtcString + "$" +
-                        "\n_____________________________" +
-                        "\nЗаработано за 24 часа: " + totalAmount24String + "$" +
-                        "\n_____________________________" +
-                        "\nТекущий баланс:" +
-                        "\n" + unpaidRewardsDogeString + " DOGE ~" + totalUnpaidDogeString + "$" +
-                        "\n" + formattedUnpaidRewards + " LTC ~" + totalUnpaidLtcString + "$" +
-                        "\nИтого: " + totalNowString + "$" +
-                        "\n_____________________________" +
-                        "\nКурс DOGE к USD: " + dogeUsd +
-                        "\nКурс LTC к USD: " + ltcUsd;
+                                "\nПодключенных workers: " + connectedWorkers +
+                                "\nСуммарный хешрейт workers: " + formattedHashRateMhs +
+                                "\n_____________________________" +
+                                "\nЗаработано за 24 часа:" +
+                                "\n" + pastRewards24DogeString + " DOGE ~" + totalUsdDogeString + "$" +
+                                "\n" + pastRewards24LtcString + " LTC ~" + totalUsdLtcString + "$" +
+                                "\n_____________________________" +
+                                "\nЗаработано за 24 часа: " + totalAmount24String + "$" +
+                                "\n_____________________________" +
+                                "\nТекущий баланс:" +
+                                "\n" + unpaidRewardsDogeString + " DOGE ~" + totalUnpaidDogeString + "$" +
+                                "\n" + formattedUnpaidRewards + " LTC ~" + totalUnpaidLtcString + "$" +
+                                "\nИтого: " + totalNowString + "$" +
+                                "\n_____________________________" +
+                                "\nКурс DOGE к USD: " + dogeUsd +
+                                "\nКурс LTC к USD: " + ltcUsd +
+                                "\n_____________________________" +
+                                "\nЗаработано всего " + "\n" + "DOGE: " + paid_rewards_doge + " / " + totalRewardDoge + " USD" +
+                                "\nLTC: " + paid_rewards + " / " + totalRewardLtc + " USD" +
+                                "\nВсего: " + totalIncome + " USD";
 
                 // Устанавливаем сформированную строку в TextView
                 dataTextView.setText(displayText);
