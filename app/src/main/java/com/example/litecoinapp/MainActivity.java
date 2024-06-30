@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
                 // Извлекаем данные о workers
                 JSONObject workersObject = jsonObject.getJSONObject("workers");
-                int numWorkers = workersObject.length(); // Количество workers
 
                 // Определяем количество подключенных workers и их хешрейт
                 int connectedWorkers = 0;
@@ -107,8 +106,11 @@ public class MainActivity extends AppCompatActivity {
                 double unpaidRewardsDoge = userObject.getDouble("unpaid_rewards_doge");
                 double unpaidRewardsLtc = userObject.getDouble("unpaid_rewards");
                 String formattedUnpaidRewards = String.format("%.4f", unpaidRewardsLtc);
+
                 double paid_rewards_doge = userObject.getDouble("paid_rewards_doge");
+                String formattedPaidRewardsDoge = String.format("%.4f", paid_rewards_doge);
                 double paid_rewards = userObject.getDouble("paid_rewards");
+                String formattedPaidRewards = String.format("%.4f", paid_rewards);
 
                 String pastRewards24LtcString = String.valueOf(pastRewards24Ltc);
                 if (pastRewards24LtcString.length() > 10) {
@@ -157,8 +159,20 @@ public class MainActivity extends AppCompatActivity {
                     totalAmount24String = totalAmount24String.substring(0, 4);
                 }
                 double totalRewardDoge = paid_rewards_doge * dogeUsd;
+                String totalRewardDogeString = String.valueOf(totalRewardDoge);
+                if (totalRewardDogeString.length() > 4) {
+                    totalRewardDogeString = totalRewardDogeString.substring(0, 4);
+                }
                 double totalRewardLtc = paid_rewards * ltcUsd;
+                String totalRewardLtcString = String.valueOf(totalRewardLtc);
+                if (totalRewardLtcString.length() > 4) {
+                    totalRewardLtcString = totalRewardLtcString.substring(0, 4);
+                }
                 double totalIncome = totalRewardLtc + totalRewardDoge;
+                String totalIncomeString = String.valueOf(totalIncome);
+                if (totalIncomeString.length() > 4) {
+                    totalIncomeString = totalIncomeString.substring(0, 4);
+                }
                 String totalUnpaidLtcString = String.valueOf(totalUnpaidLtc);
                 if (totalUnpaidLtcString.length() > 4) {
                     totalUnpaidLtcString = totalUnpaidLtcString.substring(0, 4);
@@ -172,27 +186,27 @@ public class MainActivity extends AppCompatActivity {
 
                 // Формируем строку для отображения в TextView
                 String displayText =
-                        "\nКоличество workers: " + numWorkers +
-                                "\nПодключенных workers: " + connectedWorkers +
-                                "\nСуммарный хешрейт workers: " + formattedHashRateMhs +
-                                "\n_____________________________" +
+                                "\nПодключенных ASIC: " + connectedWorkers +
+                                "\nСуммарный хешрейт ASIC: " + formattedHashRateMhs +
+                                "\n_______________________________________________________" +
                                 "\nЗаработано за 24 часа:" +
                                 "\n" + pastRewards24DogeString + " DOGE ~" + totalUsdDogeString + "$" +
                                 "\n" + pastRewards24LtcString + " LTC ~" + totalUsdLtcString + "$" +
-                                "\n_____________________________" +
+                                "\n_______________________________________________________" +
                                 "\nЗаработано за 24 часа: " + totalAmount24String + "$" +
-                                "\n_____________________________" +
+                                "\n_______________________________________________________" +
                                 "\nТекущий баланс:" +
                                 "\n" + unpaidRewardsDogeString + " DOGE ~" + totalUnpaidDogeString + "$" +
                                 "\n" + formattedUnpaidRewards + " LTC ~" + totalUnpaidLtcString + "$" +
                                 "\nИтого: " + totalNowString + "$" +
-                                "\n_____________________________" +
+                                "\n_______________________________________________________" +
                                 "\nКурс DOGE к USD: " + dogeUsd +
                                 "\nКурс LTC к USD: " + ltcUsd +
-                                "\n_____________________________" +
-                                "\nЗаработано всего " + "\n" + "DOGE: " + paid_rewards_doge + " / " + totalRewardDoge + " USD" +
-                                "\nLTC: " + paid_rewards + " / " + totalRewardLtc + " USD" +
-                                "\nВсего: " + totalIncome + " USD";
+                                "\n===============================================" +
+                                "\nЗаработано всего:" + "\n" +
+                                "DOGE: " + formattedPaidRewardsDoge + " ~ " + totalRewardDogeString + " USD" +
+                                "\nLTC: " + formattedPaidRewards + " ~ " + totalRewardLtcString + " USD" +
+                                "\nВсего: " + totalIncomeString + " USD";
 
                 // Устанавливаем сформированную строку в TextView
                 dataTextView.setText(displayText);
